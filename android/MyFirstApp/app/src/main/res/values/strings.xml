@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">MyFirstApp</string>
+    <string name="app_name">Shopping Pocket Alpha</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="button_registerUser">Register User</string>
+    <string name="label_user_name">User Name:</string>
+    <string name="hint_enter_username">Enter user name ...</string>
+    <string name="hint_enter_password">Enter your password ...</string>
+    <string name="edittext_register_password">Password</string>
 </resources>

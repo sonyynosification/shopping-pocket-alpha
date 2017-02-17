@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="shopws">
+    <output-path>$PROJECT_DIR$/out/artifacts/shopws</output-path>
+    <root id="archive" name="shopws.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="websonyshopper" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jackson-core-asl-1.9.2" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
