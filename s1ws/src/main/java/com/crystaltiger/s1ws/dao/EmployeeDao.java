@@ -1,0 +1,19 @@
+package com.crystaltiger.s1ws.dao;
+
+import java.util.List;
+
+import com.crystaltiger.s1ws.model.Employee;
+
+public interface EmployeeDao {
+
+	Employee findById(int id);
+
+	void saveEmployee(Employee employee);
+	
+	void deleteEmployeeBySsn(String ssn);
+	
+	List<Employee> findAllEmployees();
+
+	Employee findEmployeeBySsn(String ssn);
+
+}
