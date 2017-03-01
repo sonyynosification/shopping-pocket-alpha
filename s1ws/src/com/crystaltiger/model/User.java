@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-@Table(name="USER")
+@Table(name="user")
 public class User implements Serializable {
 
 	@Id
@@ -30,23 +30,22 @@ public class User implements Serializable {
 	private int user_id;
 
 	@Size(min=3, max=50)
-	@Column(name = "USER_NAME", nullable = false)
-	private String userName;
+	@Column(name = "user_name", nullable = false)
+	private String user_name;
 	
-	@Column(name = "USER_PASSWORD", nullable = false)
-	private String userPassword;
+	@Column(name = "user_password", nullable = false)
+	private String user_password;
 	
-	@Column(name = "USER_LOCATION")
-	private String userLocation;
+	@Column(name = "user_location")
+	private String user_location;
 	
-	@Column(name = "USER_RECENT_SEARCH")
-	private String userRecentSearch;
+	@Column(name = "user_recent_search")
+	private String user_recent_search;
 	
-	@Column(name = "USER_FAVORITE")
-	private String userFavorite;
+	@Column(name = "user_favorite")
+	private String user_favorite;
 
-
-    public int getUser_id() {
+	public int getUser_id() {
 		return user_id;
 	}
 
@@ -54,62 +53,52 @@ public class User implements Serializable {
 		this.user_id = user_id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUser_name() {
+		return user_name;
 	}
 
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
-
-	public String getUserPassword() {
-		return userPassword;
+	public String getUser_password() {
+		return user_password;
 	}
 
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
 	}
 
-
-	public String getUserLocation() {
-		return userLocation;
+	public String getUser_location() {
+		return user_location;
 	}
 
-
-
-	public void setUserLocation(String userLocation) {
-		this.userLocation = userLocation;
+	public void setUser_location(String user_location) {
+		this.user_location = user_location;
 	}
 
-
-	public String getUserRecentSearch() {
-		return userRecentSearch;
+	public String getUser_recent_search() {
+		return user_recent_search;
 	}
 
-
-	public void setUserRecentSearch(String userRecentSearch) {
-		this.userRecentSearch = userRecentSearch;
+	public void setUser_recent_search(String user_recent_search) {
+		this.user_recent_search = user_recent_search;
 	}
 
-
-	public String getUserFavorite() {
-		return userFavorite;
+	public String getUser_favorite() {
+		return user_favorite;
 	}
 
-	public void setUserFavorite(String userFavorite) {
-		this.userFavorite = userFavorite;
+	public void setUser_favorite(String user_favorite) {
+		this.user_favorite = user_favorite;
 	}
 
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", userName=" + userName + ", userPassword=" + userPassword
-				+ ", userLocation=" + userLocation + ", userRecentSearch=" + userRecentSearch + ", userFavorite="
-				+ userFavorite + "]";
+		return "User [user_id=" + user_id + ", user_name=" + user_name + ", user_password=" + user_password
+				+ ", user_location=" + user_location + ", user_recent_search=" + user_recent_search + ", user_favorite="
+				+ user_favorite + "]";
 	}
-
-
+   
 	
 }

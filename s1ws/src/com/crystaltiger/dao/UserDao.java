@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.crystaltiger.model.User;
 
-public interface UserDao {
-	User findById(int id);
-
-	void saveUser(User user);
-	
-	void deleteUserByName(String userName);
-	
+public interface UserDao {	
+	void saveUser(User user);	
+	void update(User user);
+	void delete(int user_id);	
 	List<User> findAllUsers();
-
-	User findUserByName(String userName);	
+	User findUserByName(String userName);
+	User findById(int id);
+	
 }

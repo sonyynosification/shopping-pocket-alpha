@@ -32,10 +32,16 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	}
 
 	@Override
-	public void deleteUserByName(String userName) {
-		Query query = getSession().createQuery("delete from user where user_name = :userName");
-		query.setString("user_name", userName);
-		query.executeUpdate();
+	public void delete(int user_id) {
+		Session session ;
+	    User user ;
+
+	    session = sessionFactory.getCurrentSession();
+	    user = (User)session.load(User.class,user_id);
+	    session.delete(user);
+
+	    //This makes the pending delete to be done
+	    session.flush() ;
 		
 	}
 
@@ -56,6 +62,25 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("user_name", userName));
 		return (User) criteria.uniqueResult();
+	}
+
+	@Override
+	public void update(User user) {
+		Session sesison = sessionFactory.openSession();
+	
+		 try {
+		     tx = sesison.beginTransaction();
+		     sesison.update(user);
+		     tx.commit();
+		 }
+		 catch (Exception e) {
+		     if (tx!=null) tx.rollback();
+		     throw e;
+		 }
+		 finally {
+		     session.close();
+		 }
+		
 	}
 
 }

@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUserByName(String userName) {
-		userDao.deleteUserByName(userName);
+	public void delete(int id) {
+		userDao.delete(id);
 		
 	}
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean exists(User user) {		
-		return findUserByName(user.getUserName()) != null;
+		return findUserByName(user.getUser_name()) != null;
 	}
 
    
