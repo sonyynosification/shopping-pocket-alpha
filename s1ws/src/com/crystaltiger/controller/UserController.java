@@ -72,6 +72,22 @@ public class UserController {
 
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
+	
+	// =========================================== Get User By ID
+		// =========================================
+
+		@RequestMapping(value = "search", method = RequestMethod.POST)
+		public ResponseEntity<User> search(@RequestBody User user) {
+
+			if (user == null) {
+//				LOG.info("user with id {} not found", id);
+				return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			}
+
+			List<User> usersFound = userService.searchByModel(user);
+			
+			return new ResponseEntity<User>(usersFound.get(0), HttpStatus.OK);
+		}
 
 	// =========================================== Update Existing User
 	// ===================================

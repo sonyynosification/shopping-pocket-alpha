@@ -11,5 +11,6 @@ public interface UserDao {
 	List<User> findAllUsers();
 	User findUserByName(String userName);
 	User findById(int id);
+	List<User> findUserByModel(User user);
 	
 }

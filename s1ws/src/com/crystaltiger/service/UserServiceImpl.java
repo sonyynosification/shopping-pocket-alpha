@@ -60,5 +60,11 @@ public class UserServiceImpl implements UserService {
 		return findUserByName(user.getUser_name()) != null;
 	}
 
+	@Override
+	public List<User> searchByModel(User user) {
+		List<User> users = userDao.findUserByModel(user);
+		return users;
+	}
+
    
 }
