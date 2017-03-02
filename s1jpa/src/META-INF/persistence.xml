@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="s1jpa">
+		<class>s1jpa.Brand</class>
+		<class>s1jpa.Category</class>
+		<class>s1jpa.Comment</class>
+		<class>s1jpa.CommentPK</class>
+		<class>s1jpa.Mall</class>
+		<class>s1jpa.Store</class>
+		<class>s1jpa.User</class>
+	</persistence-unit>
+</persistence>
