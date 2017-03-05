@@ -1,13 +1,13 @@
-package com.example.vtruong8.myfirstapp;
+package com.crystal.tigers.s1.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.vtruong8.myfirstapp.webservices.WebServiceInvoker;
-import com.example.vtruong8.myfirstapp.webservices.responsehandlers.AuthRegisterAsyncHttpResponseHandler;
+import com.crystal.tigers.s1.R;
+import com.crystal.tigers.s1.webservices.WebServiceInvoker;
+import com.crystal.tigers.s1.webservices.responsehandlers.AuthRegisterAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class RegisterUserActivity extends AppCompatActivity {
@@ -28,7 +28,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         params.put("password",txtPassword.getText().toString());
 
         //WebServiceInvoker wsInvoker = new WebServiceInvoker(this,"http://20.203.156.184:8088/shopws/register/doregister");
-        WebServiceInvoker wsInvoker = new WebServiceInvoker(this,"http://192.168.214.238:8088/shopws/register/doregister");
+        WebServiceInvoker wsInvoker = new WebServiceInvoker(this,"http://192.168.1.2:8088/websonyshopper/register/doregister");
 
         AuthRegisterAsyncHttpResponseHandler authRegisterAsyncHttpResponseHandler = new AuthRegisterAsyncHttpResponseHandler(wsInvoker);
         try {

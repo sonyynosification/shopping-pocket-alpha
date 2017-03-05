@@ -1,4 +1,4 @@
-package com.example.vtruong8.myfirstapp;
+package com.crystal.tigers.s1.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.vtruong8.myfirstapp.utils.constants.SimpleConstants;
+import com.crystal.tigers.s1.R;
+import com.crystal.tigers.s1.constants.SimpleConstants;
 
 public class DisplayMessageActivity extends AppCompatActivity {
 

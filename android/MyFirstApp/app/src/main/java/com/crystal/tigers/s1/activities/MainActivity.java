@@ -1,11 +1,14 @@
-package com.example.vtruong8.myfirstapp;
+package com.crystal.tigers.s1.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import com.example.vtruong8.myfirstapp.utils.constants.SimpleConstants;
+
+import com.crystal.tigers.s1.R;
+import com.crystal.tigers.s1.activities.UserActivities.UserRetrieveActivity;
+import com.crystal.tigers.s1.constants.SimpleConstants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
      */
     public void openUserRegisterView(View view) {
         Intent intent = new Intent(this,RegisterUserActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Open the Search Store view
+     * @param view
+     */
+    public void openSearchStoreView(View view) {
+        Intent intent = new Intent(this,SearchStoreActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSearchUsersView(View view) {
+        Intent intent = new Intent(this, UserRetrieveActivity.class);
         startActivity(intent);
     }
 }

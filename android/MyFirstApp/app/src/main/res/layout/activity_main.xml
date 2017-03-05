@@ -20,4 +20,15 @@
         android:layout_height="wrap_content"
         android:text="@string/button_registerUser"
         android:onClick="openUserRegisterView"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Stores"
+        android:onClick = "openSearchStoreView"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Users"
+        android:onClick = "openSearchUsersView"/>
+
 </LinearLayout>

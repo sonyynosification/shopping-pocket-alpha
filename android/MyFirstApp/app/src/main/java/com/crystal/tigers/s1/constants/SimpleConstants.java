@@ -1,4 +1,4 @@
-package com.example.vtruong8.myfirstapp.utils.constants;
+package com.crystal.tigers.s1.constants;
 
 /**
  * Created by vtruong8 on 14/02/2017.

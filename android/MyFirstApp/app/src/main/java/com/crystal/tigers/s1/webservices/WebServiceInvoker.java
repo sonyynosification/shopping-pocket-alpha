@@ -1,4 +1,4 @@
-package com.example.vtruong8.myfirstapp.webservices;
+package com.crystal.tigers.s1.webservices;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by vtruong8 on 16/02/2017.

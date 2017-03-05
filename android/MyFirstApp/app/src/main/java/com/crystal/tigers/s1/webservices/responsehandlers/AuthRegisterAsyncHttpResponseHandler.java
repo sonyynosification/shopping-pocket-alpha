@@ -1,9 +1,9 @@
-package com.example.vtruong8.myfirstapp.webservices.responsehandlers;
+package com.crystal.tigers.s1.webservices.responsehandlers;
 
 import android.app.ProgressDialog;
 import android.widget.Toast;
 
-import com.example.vtruong8.myfirstapp.webservices.WebServiceInvoker;
+import com.crystal.tigers.s1.webservices.WebServiceInvoker;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONException;
