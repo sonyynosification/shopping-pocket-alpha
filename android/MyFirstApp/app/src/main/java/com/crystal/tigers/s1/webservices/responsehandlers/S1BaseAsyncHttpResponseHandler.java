@@ -2,10 +2,16 @@ package com.crystal.tigers.s1.webservices.responsehandlers;
 
 import android.app.ProgressDialog;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crystal.tigers.s1.R;
 import com.crystal.tigers.s1.webservices.WebServiceInvoker;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +37,15 @@ public abstract class S1BaseAsyncHttpResponseHandler extends AsyncHttpResponseHa
         this(wsInvoker);
         //updateOnSuccessViews.stream().filter() --> Fuck this is not possible yet. Java8 and API min 24
         this.updateOnSuccessViews = updateOnSuccessViews;
+    }
+
+    @Override
+    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+        //blank for now
+    }
+
+    public void onFinishHandlingResponse() {
+        this.wsInvoker.getProgressDialog().hide();
     }
 
     @Override
