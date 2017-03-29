@@ -48,4 +48,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UserRetrieveActivity.class);
         startActivity(intent);
     }
+
+    public void openTabbedSearchView(View view) {
+        Intent intent = new Intent(this, TabbedSearchActivity.class);
+        startActivity(intent);
+    }
 }

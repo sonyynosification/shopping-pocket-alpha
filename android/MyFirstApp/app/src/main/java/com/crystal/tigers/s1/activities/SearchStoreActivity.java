@@ -30,8 +30,6 @@ public class SearchStoreActivity extends S1BaseActivity {
         setContentView(R.layout.activity_search_store);
         categoriesArrayAdapter = new ArrayAdapter<String>(this,R.layout.list_view_item,categories);
 
-
-
     }
 
     public void initialize() {
