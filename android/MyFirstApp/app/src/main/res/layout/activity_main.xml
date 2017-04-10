@@ -28,6 +28,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Search Stores with Image"
+        android:onClick="onSearchStoreImgView"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Search Users"
         android:onClick = "openSearchUsersView"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tabbed Search"
+        android:onClick="openTabbedSearchView"/>
 </LinearLayout>

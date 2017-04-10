@@ -22,7 +22,21 @@
         <activity android:name=".activities.S1BaseActivity" />
         <activity android:name=".activities.SearchStoreActivity" />
         <activity android:name="layout.listview.ListViewItemActivity" />
-        <activity android:name=".activities.UserActivities.UserRetrieveActivity"></activity>
+        <activity android:name=".activities.UserActivities.UserRetrieveActivity" />
+        <activity
+            android:name=".activities.TabbedSearchActivity"
+            android:label="@string/title_activity_tabbed_search"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.stores.StoreDetailsActivity"
+            android:label="@string/title_activity_store_details"
+            android:parentActivityName=".activities.SearchStoreActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crystal.tigers.s1.activities.SearchStoreActivity" />
+        </activity>
+        <activity android:name=".activities.stores.SearchStoreNew"></activity>
     </application>
 
 </manifest>

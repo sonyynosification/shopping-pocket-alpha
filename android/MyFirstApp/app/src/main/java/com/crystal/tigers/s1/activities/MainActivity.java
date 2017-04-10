@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.crystal.tigers.s1.R;
 import com.crystal.tigers.s1.activities.UserActivities.UserRetrieveActivity;
+import com.crystal.tigers.s1.activities.stores.SearchStoreNew;
 import com.crystal.tigers.s1.constants.SimpleConstants;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSearchUsersView(View view) {
         Intent intent = new Intent(this, UserRetrieveActivity.class);
+        startActivity(intent);
+    }
+
+    public void openTabbedSearchView(View view) {
+        Intent intent = new Intent(this, TabbedSearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSearchStoreImgView(View view) {
+        Intent intent = new Intent(this, SearchStoreNew.class);
         startActivity(intent);
     }
 }
