@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.crystal.tigers.s1.R;
+import com.crystal.tigers.s1.activities.listener.StoreOnItemClickListener;
 import com.crystal.tigers.s1.webservices.WebServiceInvoker;
 import com.crystal.tigers.s1.webservices.responsehandlers.StoreListAsyncHttpResponseHandler;
 import com.crystal.tigers.s1.webservices.responsehandlers.StoreListNewAsyncHttpResponseHandler;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class SearchStoreNew extends AppCompatActivity {
     protected  String searchQuery;
-    protected View searchResultListView;
+    protected ListView searchResultListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,11 @@ public class SearchStoreNew extends AppCompatActivity {
     public void onSearchStore(View view) {
         EditText searchText = (EditText) findViewById(R.id.edittext_search_store);
         String searchQuery = searchText.getText().toString();
+
         searchResultListView = (ListView) findViewById(R.id.listView_searchResults);
+        StoreOnItemClickListener itemClickListener = new StoreOnItemClickListener(this,searchResultListView,
+                StoreDetailsViewActivity.class);
+        searchResultListView.setOnItemClickListener(itemClickListener);
 
 //        Uri imgUri = Uri.parse("http://www.jrtstudio.com/sites/default/files/ico_android.png");
 //        ImageView v = (ImageView) findViewById(R.id.testImg);

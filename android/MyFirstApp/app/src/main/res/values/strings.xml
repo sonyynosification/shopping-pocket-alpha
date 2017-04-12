@@ -13,4 +13,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_store_details">StoreDetailsActivity</string>
     <string name="label_store_name">Store Name</string>
+    <string name="title_activity_store_details_view">StoreDetailsViewActivity</string>
+    <string name="label_store_address">Store Address</string>
+    <string name="label_store_email">Email</string>
 </resources>

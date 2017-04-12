@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.crystal.tigers.s1.activities.stores.StoreDetailsViewActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableRow>
+            <ImageView
+                android:id="@+id/imgView_store_icon"/>
+        </TableRow>
+        <!--Store Name-->
+        <TableRow>
+            <TextView android:text="@string/label_store_name"/>
+            <TextView android:id="@+id/textView_store_detail_name"/>
+        </TableRow>
+        <!--Store address-->
+        <TableRow>
+            <TextView android:text="@string/label_store_address"/>
+            <TextView android:id="@+id/textView_store_detail_address"/>
+        </TableRow>
+        <!--Store email-->
+        <TableRow>
+            <TextView android:text="@string/label_store_email"/>
+            <TextView android:id="@+id/textView_store_detail_email"/>
+        </TableRow>
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>

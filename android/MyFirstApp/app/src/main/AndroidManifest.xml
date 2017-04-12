@@ -36,7 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crystal.tigers.s1.activities.SearchStoreActivity" />
         </activity>
-        <activity android:name=".activities.stores.SearchStoreNew"></activity>
+        <activity android:name=".activities.stores.SearchStoreNew" />
+        <activity android:name=".activities.stores.StoreDetailsViewActivity"></activity>
     </application>
 
 </manifest>

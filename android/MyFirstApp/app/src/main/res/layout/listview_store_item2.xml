@@ -18,14 +18,14 @@
             android:layout_width="match_parent"
             android:layout_weight="0.6"
             android:layout_height="0dp"
-            android:text="StoreName"
             android:textStyle="bold"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:id="@+id/textView_res_store_name"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.4"
-            android:text="Address"/>
+            android:id="@+id/textView_res_store_address"/>
     </LinearLayout>
 
 </LinearLayout>
