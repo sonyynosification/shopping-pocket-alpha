@@ -1,104 +1,120 @@
 package com.crystaltiger.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.List;
 
 
-
+/**
+ * The persistent class for the user database table.
+ * 
+ */
 @Entity
-@Table(name="user")
+@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int user_id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="user_id")
+	private int userId;
 
-	@Size(min=3, max=50)
-	@Column(name = "user_name", nullable = false)
-	private String user_name;
-	
-	@Column(name = "user_password", nullable = false)
-	private String user_password;
-	
-	@Column(name = "user_location")
-	private String user_location;
-	
-	@Column(name = "user_recent_search")
-	private String user_recent_search;
-	
-	@Column(name = "user_favorite")
-	private String user_favorite;
+	@Column(name="user_favorite")
+	private String userFavorite;
 
-	public int getUser_id() {
-		return user_id;
+	@Column(name="user_location")
+	private String userLocation;
+
+	@Column(name="user_name")
+	private String userName;
+
+	@Column(name="user_password")
+	private String userPassword;
+
+	@Column(name="user_recent_search")
+	private String userRecentSearch;
+
+	//bi-directional many-to-one association to Comment	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	@Column(nullable = true)
+    @JsonManagedReference(value="user-comment")
+	private List<Comment> comments;
+
+	public User() {
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public int getUserId() {
+		return this.userId;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public String getUserFavorite() {
+		return this.userFavorite;
 	}
 
-	public String getUser_password() {
-		return user_password;
+	public void setUserFavorite(String userFavorite) {
+		this.userFavorite = userFavorite;
 	}
 
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
+	public String getUserLocation() {
+		return this.userLocation;
 	}
 
-	public String getUser_location() {
-		return user_location;
+	public void setUserLocation(String userLocation) {
+		this.userLocation = userLocation;
 	}
 
-	public void setUser_location(String user_location) {
-		this.user_location = user_location;
+	public String getUserName() {
+		return this.userName;
 	}
 
-	public String getUser_recent_search() {
-		return user_recent_search;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void setUser_recent_search(String user_recent_search) {
-		this.user_recent_search = user_recent_search;
+	public String getUserPassword() {
+		return this.userPassword;
 	}
 
-	public String getUser_favorite() {
-		return user_favorite;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public void setUser_favorite(String user_favorite) {
-		this.user_favorite = user_favorite;
+	public String getUserRecentSearch() {
+		return this.userRecentSearch;
 	}
 
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", user_name=" + user_name + ", user_password=" + user_password
-				+ ", user_location=" + user_location + ", user_recent_search=" + user_recent_search + ", user_favorite="
-				+ user_favorite + "]";
+	public void setUserRecentSearch(String userRecentSearch) {
+		this.userRecentSearch = userRecentSearch;
 	}
-   
-	
+
+	public List<Comment> getComments() {
+		return this.comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public Comment addComment(Comment comment) {
+		getComments().add(comment);
+		comment.setUser(this);
+
+		return comment;
+	}
+
+	public Comment removeComment(Comment comment) {
+		getComments().remove(comment);
+		comment.setUser(null);
+
+		return comment;
+	}
+
 }

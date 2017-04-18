@@ -2,50 +2,51 @@ package com.crystaltiger.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crystaltiger.model.User;
+import com.mysql.jdbc.log.Log;
+
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
-	 @Autowired
+	EntityManager em;
+	
+	@Autowired
 	 SessionFactory sessionFactory;
 
 	 Session session = null;
 	 Transaction tx = null;
-	 
+
 	@Override
-	public User findById(int id) {		
+	public User findById(int id) {
 		return getByKey(id);
 	}
 
 	@Override
 	public void saveUser(User user) {
 		persist(user);
-		
+
 	}
 
 	@Override
 	public void delete(int user_id) {
-		Session session ;
-	    User user ;
+		User user = em.find(User.class, user_id);
+		em.getTransaction().begin();
+		em.remove(user);
+		em.getTransaction().commit();
 
-	    session = sessionFactory.getCurrentSession();
-	    user = (User)session.load(User.class,user_id);
-	    session.delete(user);
-
-	    //This makes the pending delete to be done
-	    session.flush() ;
-		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllUsers() {
 		session = sessionFactory.openSession();
@@ -60,34 +61,28 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	@Override
 	public User findUserByName(String userName) {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("user_name", userName));
+		criteria.add(Restrictions.eq("userName", userName));
 		return (User) criteria.uniqueResult();
 	}
 
 	@Override
 	public void update(User user) {
-		Session sesison = sessionFactory.openSession();
-	
-		 try {
-		     tx = sesison.beginTransaction();
-		     sesison.update(user);
-		     tx.commit();
-		 }
-		 catch (Exception e) {
-		     if (tx!=null) tx.rollback();
-		     throw e;
-		 }
-		 finally {
-		     session.close();
-		 }
-		
+		System.out.println("This update function is not updated code yet. Please update code in UserDaoImpl");
 	}
 
 	@Override
 	public List<User> findUserByModel(User user) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("user_name", user.getUser_name()));
-		criteria.add(Restrictions.like("user_location", user.getUser_location()));
+		//Criteria criteria = createEntityCriteria();
+		//criteria.add(Restrictions.like("userName", user.getUserName()).ignoreCase());		
+		//criteria.add(Restrictions.like("userLocation", user.getUserLocation()).ignoreCase());
+		//criteria.add(Restrictions.or(Restrictions.and(Restrictions.isNotNull("userName"), Restrictions.eq("userName", user.getUserName())), Restrictions.isNull("userName")));
+		//criteria.add(Restrictions.or(Restrictions.and(Restrictions.isNotNull("userLocation"), Restrictions.eq("userLocation", user.getUserLocation())), Restrictions.isNull("userLocation")));
+		Criteria criteria = session.createCriteria(User.class);
+		Disjunction or = Restrictions.disjunction();
+		or.add(Restrictions.eq("userName",user.getUserName()));
+		or.add(Restrictions.eq("userLocation",user.getUserLocation()));		
+		criteria.add(or);
+		
 		return (List<User>) criteria.list();
 	}
 

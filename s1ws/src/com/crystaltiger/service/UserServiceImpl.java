@@ -52,12 +52,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isUserNameUnique(Integer id, String userName) {
 		User user = userDao.findUserByName(userName);
-		return ( user == null || ((id != null) && (user.getUser_id() == id)));
+		return ( user == null || ((id != null) && (user.getUserId() == id)));
 	}
 
 	@Override
 	public boolean exists(User user) {		
-		return findUserByName(user.getUser_name()) != null;
+		return findUserByName(user.getUserName()) != null;
 	}
 
 	@Override
