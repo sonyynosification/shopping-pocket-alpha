@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="WEBSERVICE_BASE_URL">http://192.168.1.2:8088/shopws</string>
+    <string name="WEBSERVICE_TEST_URL">http://35.165.31.169:3000/</string>
+    <string name="WEBSERVICE_TEST_URL_USERS">http://35.165.31.169:3000/users</string>
+    <string name="WEBSERVICE_TEST_URL_STORES">http://35.165.31.169:3000/stores</string>
+    <string name="google_maps_key">AIzaSyDxM-kLFIodMqN22nDrzmDquZb-Iu0rRNI</string>
+</resources>
