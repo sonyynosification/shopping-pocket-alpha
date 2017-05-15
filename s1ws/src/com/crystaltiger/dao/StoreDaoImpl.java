@@ -29,8 +29,8 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 	public List<Store> searchStore(Store store) {
 
 		Criteria criteria = session.createCriteria(Store.class);
-		Criterion storeName = Restrictions.like("storeName", store.getStroreName());
-		Criterion storeLocation = Restrictions.like("storeLocation", store.getStroreAddress());
+		Criterion storeName = Restrictions.like("storeName", store.getStoreName());
+		Criterion storeLocation = Restrictions.like("storeLocation", store.getStoreAddress());
 		Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
 		criteria.add(completedCondition);
 		return (List<Store>) criteria.list();

@@ -23,13 +23,13 @@ public class Comment implements Serializable {
 
 	//bi-directional many-to-one association to Store
 	@ManyToOne(fetch = FetchType.EAGER)	
-	@JoinColumn(name="Store_str_id")
+	@JoinColumn(name="store_id")
 	@JsonBackReference(value="store-comment")
 	private Store store;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="User_usr_id")
+	@JoinColumn(name="user_id")
 	@JsonBackReference(value="user-comment")
 	private User user;
 
