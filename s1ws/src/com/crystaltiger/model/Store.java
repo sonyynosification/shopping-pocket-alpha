@@ -1,8 +1,10 @@
 package com.crystaltiger.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,17 +14,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * The persistent class for the store database table.
  * 
  */
 @Entity
-@NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s")
+@Table(name = "store")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "storeId")
 public class Store implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,86 +67,113 @@ public class Store implements Serializable {
 	@Column(name = "store_parent_id")
 	private String storePid;
 
-	// bi-directional many-to-one association to Comment
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "store")
-	@JsonManagedReference(value = "store-comment")
-
-	private Set<Comment> comments;
-
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.store", cascade = CascadeType.ALL)
+	@Fetch(FetchMode.SELECT)
+	@BatchSize(size = 10)
+	@JsonIgnore
+	private List<Comment> comments;
+	
+	
 	// bi-directional many-to-many association to Category
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "category_in_store", joinColumns = { @JoinColumn(name = "strore_id") }, inverseJoinColumns = {
+	@JoinTable(name = "category_in_store", joinColumns = { @JoinColumn(name = "store_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "cat_id") })
-	private Set<Category> categories;
+	@Fetch(FetchMode.SELECT)
+	@BatchSize(size = 10)
+	//@JsonIgnore
+	private List<Category> categories;
+	
 
 	// bi-directional many-to-many association to Mall
-	@ManyToMany
-	@JoinTable(name = "mall_has_store", joinColumns = { @JoinColumn(name = "strore_id") }, inverseJoinColumns = {
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "mall_has_store", joinColumns = { @JoinColumn(name = "store_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "mall_id") })
-	private Set<Mall> malls;
+	@Fetch(FetchMode.SELECT)
+	@BatchSize(size = 10)
+	//@JsonIgnore
+	private List<Mall> malls;
 
 	// bi-directional many-to-many association to Brand
-	@ManyToMany
-	@JoinTable(name = "store_in_brand", joinColumns = { @JoinColumn(name = "strore_id") }, inverseJoinColumns = {
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "store_in_brand", joinColumns = { @JoinColumn(name = "store_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "brand_id") })
-	private Set<Brand> brands;
+	@Fetch(FetchMode.SELECT)
+	@BatchSize(size = 10)
+	//@JsonIgnore
+	private List<Brand> brands;
 
 	public Store() {
 	}
 
-	public int getStroreId() {
+	public int getStoreId() {
 		return this.storeId;
 	}
 
-	public void setStroreId(int storeId) {
+	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
 
-	public String getStroreAddress() {
+	public String getStoreAddress() {
 		return this.storeAddress;
 	}
 
-	public void setStroreAddress(String storeAddress) {
+	public void setStoreAddress(String storeAddress) {
 		this.storeAddress = storeAddress;
 	}
 
-	public String getStroreEmail() {
+	public String getStoreEmail() {
 		return this.storeEmail;
 	}
 
-	public void setStroreEmail(String storeEmail) {
+	public void setStoreEmail(String storeEmail) {
 		this.storeEmail = storeEmail;
 	}
 
-	public String getStroreName() {
+	public String getStoreName() {
 		return this.storeName;
 	}
 
-	public void setStroreName(String storeName) {
+	public void setStoreName(String storeName) {
 		this.storeName = storeName;
 	}
 
-	public String getStrorePhone() {
+	public String getStorePhone() {
 		return this.storePhone;
 	}
 
-	public void setStrorePhone(String storePhone) {
+	public void setStorePhone(String storePhone) {
 		this.storePhone = storePhone;
 	}
 
-	public Set<Category> getCategories() {
+	public List<Category> getCategories() {
 		return this.categories;
 	}
 
-	public void setCategories(Set<Category> categories) {
+	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
 
-	public Set<Comment> getComments() {
-		return this.comments;
+	public String getStoreCode() {
+		return storeCode;
 	}
 
-	public void setComments(Set<Comment> comments) {
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	public String getStorePid() {
+		return storePid;
+	}
+
+	public void setStorePid(String storePid) {
+		this.storePid = storePid;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
@@ -155,19 +191,19 @@ public class Store implements Serializable {
 		return comment;
 	}
 
-	public Set<Mall> getMalls() {
+	public List<Mall> getMalls() {
 		return this.malls;
 	}
 
-	public void setMalls(Set<Mall> malls) {
+	public void setMalls(List<Mall> malls) {
 		this.malls = malls;
 	}
 
-	public Set<Brand> getBrands() {
+	public List<Brand> getBrands() {
 		return this.brands;
 	}
 
-	public void setBrands(Set<Brand> brands) {
+	public void setBrands(List<Brand> brands) {
 		this.brands = brands;
 	}
 

@@ -2,6 +2,10 @@ package com.crystaltiger.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.List;
 
 
@@ -10,7 +14,8 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Brand.findAll", query="SELECT b FROM Brand b")
+@Table(name="brand")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "brandId")
 public class Brand implements Serializable {
 	private static final long serialVersionUID = 1L;
 
