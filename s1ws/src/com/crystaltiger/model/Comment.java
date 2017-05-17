@@ -1,9 +1,8 @@
 package com.crystaltiger.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.*;
 
 
 /**
@@ -11,39 +10,47 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * 
  */
 @Entity
-@NamedQuery(name="Comment.findAll", query="SELECT c FROM Comment c")
+@Table(name = "comment")
+@AssociationOverrides({ @AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "user_id")),
+		@AssociationOverride(name = "pk.store", joinColumns = @JoinColumn(name = "store_id")) })
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private UserStoreId pk = new UserStoreId();
+	
 
-	@EmbeddedId
-	private CommentPK id;
-
-	@Column(name="user_comment")
+	@Column(name = "user_comment")
 	private String userComment;
-
-	//bi-directional many-to-one association to Store
-	@ManyToOne(fetch = FetchType.EAGER)	
-	@JoinColumn(name="store_id")
-	@JsonBackReference(value="store-comment")
-	private Store store;
-
-	//bi-directional many-to-one association to User
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="user_id")
-	@JsonBackReference(value="user-comment")
-	private User user;
 
 	public Comment() {
 	}
 
-	public CommentPK getId() {
-		return this.id;
+	@EmbeddedId
+	public UserStoreId getPk() {
+		return pk;
 	}
 
-	public void setId(CommentPK id) {
-		this.id = id;
+	public void setPk(UserStoreId pk) {
+		this.pk = pk;
+	}
+	
+	@Transient
+	public Store getStore() {
+		return getPk().getStore();
 	}
 
+	public void setStore(Store store) {
+		getPk().setStore(store);
+	}
+
+	@Transient
+	public User getUser() {
+		return getPk().getUser();
+	}
+
+	public void setUser(User user) {
+		getPk().setUser(user);
+	}
+	
 	public String getUserComment() {
 		return this.userComment;
 	}
@@ -52,20 +59,37 @@ public class Comment implements Serializable {
 		this.userComment = userComment;
 	}
 
-	public Store getStore() {
-		return this.store;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+		result = prime * result + ((userComment == null) ? 0 : userComment.hashCode());
+		return result;
 	}
 
-	public void setStore(Store store) {
-		this.store = store;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		if (pk == null) {
+			if (other.pk != null)
+				return false;
+		} else if (!pk.equals(other.pk))
+			return false;
+		if (userComment == null) {
+			if (other.userComment != null)
+				return false;
+		} else if (!userComment.equals(other.userComment))
+			return false;
+		return true;
 	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	
 
 }

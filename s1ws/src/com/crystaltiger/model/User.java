@@ -2,6 +2,7 @@ package com.crystaltiger.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,10 +11,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -21,7 +28,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * 
  */
 @Entity
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@Table(name="user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,10 +54,10 @@ public class User implements Serializable {
 	@Column(name="user_recent_search")
 	private String userRecentSearch;
 
-	//bi-directional many-to-one association to Comment	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-	@Column(nullable = true)
-    @JsonManagedReference(value="user-comment")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user",cascade = CascadeType.ALL)	
+	@Fetch(FetchMode.SELECT)
+        @BatchSize(size = 10)
+	@JsonIgnore	
 	private List<Comment> comments;
 
 	public User() {
@@ -102,6 +111,7 @@ public class User implements Serializable {
 		this.userRecentSearch = userRecentSearch;
 	}
 
+	
 	public List<Comment> getComments() {
 		return this.comments;
 	}
@@ -110,7 +120,65 @@ public class User implements Serializable {
 		this.comments = comments;
 	}
 
-	public Comment addComment(Comment comment) {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((userFavorite == null) ? 0 : userFavorite.hashCode());
+		result = prime * result + userId;
+		result = prime * result + ((userLocation == null) ? 0 : userLocation.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((userPassword == null) ? 0 : userPassword.hashCode());
+		result = prime * result + ((userRecentSearch == null) ? 0 : userRecentSearch.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (userFavorite == null) {
+			if (other.userFavorite != null)
+				return false;
+		} else if (!userFavorite.equals(other.userFavorite))
+			return false;
+		if (userId != other.userId)
+			return false;
+		if (userLocation == null) {
+			if (other.userLocation != null)
+				return false;
+		} else if (!userLocation.equals(other.userLocation))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		if (userPassword == null) {
+			if (other.userPassword != null)
+				return false;
+		} else if (!userPassword.equals(other.userPassword))
+			return false;
+		if (userRecentSearch == null) {
+			if (other.userRecentSearch != null)
+				return false;
+		} else if (!userRecentSearch.equals(other.userRecentSearch))
+			return false;
+		return true;
+	}
+
+	/*public Comment addComment(Comment comment) {
 		getComments().add(comment);
 		comment.setUser(this);
 
@@ -122,6 +190,8 @@ public class User implements Serializable {
 		comment.setUser(null);
 
 		return comment;
-	}
+	}*/
+	
+	
 
 }
