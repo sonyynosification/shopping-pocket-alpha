@@ -49,7 +49,9 @@ public class StoreController {
 		Store store = mapperObj.readValue(jsonStr, Store.class);
 		System.out.println("jsonStr" + jsonStr);
 
-		if (store == null || StringConstants.EMPTY_STRING.equals(jsonStr)) {
+
+		//TODO: we should return the same HttpStatus.OK when no result. That would be helpful in some cases.
+		if (store == null || jsonStr.isEmpty()) {
 			return new ResponseEntity("no store found", HttpStatus.NOT_FOUND);
 		}
 
@@ -57,7 +59,7 @@ public class StoreController {
 
 		//TODO: handle the results in another class / function
 		Map results = new HashMap();
-		results.put("users", storeList);
+		results.put("stores", storeList);
 		LOG.info("results: ", results);
 		return new ResponseEntity(results, HttpStatus.OK); 
 	}
@@ -67,15 +69,22 @@ public class StoreController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<List<Store>> getAll() {
-		LOG.info("getting all users");
+	public ResponseEntity<Map<String,Object>> getAll() {
+		LOG.info("getting all stores");
 		List<Store> stores = storeService.getStores();
 		if (stores == null || stores.isEmpty()) {
 			LOG.info("no stores found");
-			return new ResponseEntity<List<Store>>(HttpStatus.NO_CONTENT);
+			//TODO: No content is weird :( let's return an empty list
+			//return new ResponseEntity<List<Store>>(HttpStatus.NO_CONTENT);
 		}
 
-		return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+		//TODO: I'm trying to modify the response this way: { "stores":[ { store1},...], "otherparams": {}}
+        //TODO: As mentioned, it would need to go into some functions / class
+        Map<String,Object> results = new HashMap<String,Object>();
+        results.put("stores", stores);
+        results.put("messages", "OK");
+
+		return new ResponseEntity(results, HttpStatus.OK);
 	}
 
     /**
