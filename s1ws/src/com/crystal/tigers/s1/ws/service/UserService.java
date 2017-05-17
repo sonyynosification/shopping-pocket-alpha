@@ -19,6 +19,7 @@ public interface UserService {
 	User findUserByName(String userName);
 
 	boolean isUserNameUnique(Integer id, String userName);
+
 	boolean exists(User user);
 
 	List<User> searchByModel(User user);

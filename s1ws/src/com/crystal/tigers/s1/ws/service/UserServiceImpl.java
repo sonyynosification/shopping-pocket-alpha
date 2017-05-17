@@ -17,7 +17,8 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao; 
 	@Override
 	public User findById(int id) {		
-		return userDao.findById(id);
+		User retUser = userDao.findById(id);
+		return retUser;
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User user) {
-		// TODO Auto-generated method stub
+		//TODO: implementation needed
 		
 	}
 
@@ -40,7 +41,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findAllUsers() {
-		return userDao.findAllUsers();
+		List<User> allUsersList = userDao.findAllUsers();
+		return allUsersList;
 	}
 
 	@Override
@@ -52,12 +54,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isUserNameUnique(Integer id, String userName) {
 		User user = userDao.findUserByName(userName);
-		return ( user == null || ((id != null) && (user.getUserId() == id)));
+		boolean isUnique =  ( user == null
+                            || ((id != null) && (user.getUserId() == id)));
+		return isUnique;
 	}
 
 	@Override
 	public boolean exists(User user) {		
-		return findUserByName(user.getUserName()) != null;
+		boolean isExists = findUserByName(user.getUserName()) != null;
+		return isExists;
 	}
 
 	@Override

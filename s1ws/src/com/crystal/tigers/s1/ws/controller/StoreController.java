@@ -78,4 +78,8 @@ public class StoreController {
 		return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
 	}
 
+    /**
+     *
+     */
+
 }
