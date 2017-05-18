@@ -1,7 +1,7 @@
 package com.crystal.tigers.s1.ws.controller;
 
 import com.crystal.tigers.s1.ws.model.User;
-import com.crystal.tigers.s1.ws.service.UserService;
+import com.crystal.tigers.s1.ws.service.IUserService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +27,7 @@ public class UserController {
 	private final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	// =========================================== Get All Users ==========================================
 

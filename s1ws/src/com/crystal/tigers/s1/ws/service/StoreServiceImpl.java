@@ -10,9 +10,11 @@ import com.crystal.tigers.s1.ws.dao.StoreDao;
 import com.crystal.tigers.s1.ws.model.Store;
 @Service("storeService")
 @Transactional
-public class StoreServiceImpl implements StoreService {
+public class StoreServiceImpl implements IStoreService {
+
 	@Autowired
 	private StoreDao storeDao; 
+
 	@Override
 	public List<Store> searchStore(Store store) {		
 		return storeDao.searchStore(store);
@@ -63,5 +65,16 @@ public class StoreServiceImpl implements StoreService {
 	public Store getStoreByID(int id) {		
 		return storeDao.getStoreByID(id);
 	}
+
+	@Override
+	public boolean exists(Store store) {
+		//TODO: implementation needed
+		return false;
+	}
+
+    @Override
+    public void saveStore(Store newStore) {
+        //TODO: implementation needed
+    }
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.crystal.tigers.s1.ws.model.User;
 
-public interface UserService {
+public interface IUserService {
 
 	User findById(int id);
 	

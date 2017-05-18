@@ -1,11 +1,12 @@
 package com.crystal.tigers.s1.ws.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.crystal.tigers.s1.ws.common.utils.constants.StringConstants;
+import com.crystal.tigers.s1.ws.common.objects.mapper.JSONRequestMapperObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crystal.tigers.s1.ws.model.Store;
-import com.crystal.tigers.s1.ws.service.StoreService;
+import com.crystal.tigers.s1.ws.service.IStoreService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +30,7 @@ public class StoreController {
 	private final Logger LOG = LoggerFactory.getLogger(StoreController.class);
 
 	@Autowired
-	private StoreService storeService;
+	private IStoreService storeService;
 
 	/**
 	 * Simple search for some specific stores.
@@ -87,8 +88,32 @@ public class StoreController {
 		return new ResponseEntity(results, HttpStatus.OK);
 	}
 
-    /**
-     *
-     */
+	@RequestMapping(value="/create", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> create(@RequestBody JSONRequestMapperObject<Store> newObj) {
+		LOG.info("Creating a store:");
+        //TODO: create new response entity and results || statusCode using Factory pattern
+        Map<String, Object> results = new HashMap<String, Object>();
+        ResponseEntity<Map<String, Object>> responseEntity;
+        HttpStatus statusCode;
+
+        //TODO: messages should be well formatted to provide level: info / errors / warning
+        List<String> messages = new ArrayList<String>();
+
+		Store newStore = newObj.getObject();
+
+		if (storeService.exists(newStore)) {
+		    messages.add("Store already exists");
+		    results.put("messages",messages);
+		    statusCode = HttpStatus.CONFLICT;
+        } else {
+		    storeService.saveStore(newStore);
+		    messages.add("Store created successfully");
+		    results.put("messages",messages);
+		    statusCode = HttpStatus.CREATED;
+        }
+
+        responseEntity = new ResponseEntity<Map<String, Object>>(results, statusCode);
+        return responseEntity;
+	}
 
 }

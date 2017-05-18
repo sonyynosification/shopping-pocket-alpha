@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.crystal.tigers.s1.ws.model.Store;
 
-public interface StoreService {
+public interface IStoreService {
 
 	public List<Store> searchStore(Store store);
 
@@ -26,4 +26,8 @@ public interface StoreService {
 	public List<Store> getStores(int maxReturn);
 
 	public Store getStoreByID(int id);
+
+	public boolean exists(Store store);
+
+	public void saveStore(Store newStore);
 }
