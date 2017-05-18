@@ -101,6 +101,8 @@ public class StoreController {
 
 		Store newStore = newObj.getObject();
 
+
+		//TODO: directs the logic works to another service. Controller should be only responsible for handling in/out
 		if (storeService.exists(newStore)) {
 		    messages.add("Store already exists");
 		    results.put("messages",messages);
