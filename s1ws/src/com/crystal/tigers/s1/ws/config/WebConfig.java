@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("com.crystaltiger")
+@ComponentScan("com.crystal.tigers.s1.ws")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 }
