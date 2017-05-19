@@ -77,4 +77,10 @@ public class StoreServiceImpl implements IStoreService {
         //TODO: implementation needed
     }
 
+	@Override
+	public Store findById(int storeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

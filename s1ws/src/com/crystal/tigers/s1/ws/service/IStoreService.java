@@ -30,4 +30,6 @@ public interface IStoreService {
 	public boolean exists(Store store);
 
 	public void saveStore(Store newStore);
+
+	public Store findById(int storeId);
 }

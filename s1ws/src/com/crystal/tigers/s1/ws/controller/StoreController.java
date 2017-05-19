@@ -7,17 +7,20 @@ import java.util.List;
 import java.util.Map;
 
 import com.crystal.tigers.s1.ws.common.objects.mapper.JSONRequestMapperObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crystal.tigers.s1.ws.model.Store;
+import com.crystal.tigers.s1.ws.model.User;
 import com.crystal.tigers.s1.ws.service.IStoreService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -116,6 +119,33 @@ public class StoreController {
 
         responseEntity = new ResponseEntity<Map<String, Object>>(results, statusCode);
         return responseEntity;
+	}
+	
+	/**
+	 * Get details of a specific store
+	 * @return
+	 */
+	@RequestMapping(value="/id/{store_id}", method=RequestMethod.GET)
+	public ResponseEntity<Map<String,Object>> getOne(@PathVariable("store_id") int storeId) {
+		LOG.info("getting store with id: {}", storeId);
+		Map<String, Object> results = new HashMap<String, Object>();
+        ResponseEntity<Map<String, Object>> responseEntity;
+        HttpStatus statusCode;
+
+		Store store = storeService.findById(storeId);
+
+		if (store == null) {
+			LOG.info("store with id {} not found", storeId);
+			statusCode = HttpStatus.NOT_FOUND;
+			responseEntity = new ResponseEntity<>(statusCode);
+		} else {
+			statusCode = HttpStatus.OK;
+			results.put("object", store);
+			results.put("object_name", "Store");
+			responseEntity = new ResponseEntity<>(results,statusCode);
+		}
+		
+		return responseEntity;
 	}
 
 }
