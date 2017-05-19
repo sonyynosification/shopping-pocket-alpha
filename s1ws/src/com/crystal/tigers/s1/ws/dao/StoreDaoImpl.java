@@ -40,12 +40,12 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements IStoreD
 	@Override
 	public List<Store> getStores() {
 		session = sessionFactory.openSession();
-		  tx = session.beginTransaction();
-		  List storeList = session.createCriteria(Store.class)
-		    .list();
-		  tx.commit();
-		  session.close();
-		  return storeList;
+        tx = session.beginTransaction();
+        List storeList = session.createCriteria(Store.class)
+            .list();
+        tx.commit();
+        session.close();
+        return storeList;
 	}
 
 	@Override
@@ -75,19 +75,24 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements IStoreD
 
 	@Override
 	public List<Store> findStores(Store searchStore, int maxReturn, SearchOrdering ordering) {
-        Criteria criteria = session.createCriteria(Store.class);
-        //TODO: More Criterion to be created
-        Criterion storeName = Restrictions.like("storeName", searchStore.getStoreName());
-        Criterion storeLocation = Restrictions.like("storeLocation", searchStore.getStoreAddress());
-        Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+            Criteria criteria = session.createCriteria(Store.class);
+            //TODO: More Criterion to be created
+            Criterion storeName = Restrictions.like("storeName", searchStore.getStoreName());
+            Criterion storeLocation = Restrictions.like("storeLocation", searchStore.getStoreAddress());
+            Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
 
-        criteria.add(completedCondition);
+            criteria.add(completedCondition);
 
-        criteria.setMaxResults(maxReturn);
+            criteria.setMaxResults(maxReturn);
 
-        setCriteriaOrders(criteria, ordering);
+            setCriteriaOrders(criteria, ordering);
 
-        return (List<Store>) criteria.list();
+            List<Store> results = criteria.list();
+        tx.commit();
+        session.close();
+        return results;
 	}
 
 }
