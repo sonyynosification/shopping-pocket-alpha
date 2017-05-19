@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.crystal.tigers.s1.ws.common.objects.SearchOrdering;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.crystal.tigers.s1.ws.model.Store;
 
 @Repository("storeDao")
-public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDao {
+public class StoreDaoImpl extends AbstractDao<Integer, Store> implements IStoreDao {
 	EntityManager em;
 
 	@Autowired
@@ -70,6 +71,23 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 	public Store getStoreByID(int id) {
 		// TODO Auto-generated method stub
 		return getByKey(id);
+	}
+
+	@Override
+	public List<Store> findStores(Store searchStore, int maxReturn, SearchOrdering ordering) {
+        Criteria criteria = session.createCriteria(Store.class);
+        //TODO: More Criterion to be created
+        Criterion storeName = Restrictions.like("storeName", searchStore.getStoreName());
+        Criterion storeLocation = Restrictions.like("storeLocation", searchStore.getStoreAddress());
+        Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
+
+        criteria.add(completedCondition);
+
+        criteria.setMaxResults(maxReturn);
+
+        setCriteriaOrders(criteria, ordering);
+
+        return (List<Store>) criteria.list();
 	}
 
 }

@@ -2,46 +2,49 @@ package com.crystal.tigers.s1.ws.service;
 
 import java.util.List;
 
+import com.crystal.tigers.s1.ws.common.objects.SearchOrdering;
+import com.crystal.tigers.s1.ws.common.utils.constants.SearchQualifiers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.crystal.tigers.s1.ws.dao.StoreDao;
+import com.crystal.tigers.s1.ws.dao.IStoreDao;
 import com.crystal.tigers.s1.ws.model.Store;
 @Service("storeService")
 @Transactional
 public class StoreServiceImpl implements IStoreService {
 
 	@Autowired
-	private StoreDao storeDao; 
+	private IStoreDao storeDao;
 
 	@Override
 	public List<Store> searchStore(Store store) {		
-		return storeDao.searchStore(store);
+		return searchStore(store, SearchQualifiers.SEARCH_RANGE_UNLIMITED);
 	}
 
+    /**
+     * Return the qualified store with maxReturn number of results
+     * @param store
+     * @param maxReturn number of results, or -1 for unlimited
+     * @return
+     */
 	@Override
 	public List<Store> searchStore(Store store, int maxReturn) {
-	    //TODO: implementation needed
-		return null;
+	    SearchOrdering order = SearchOrdering.newInstance();
+		return searchStore(store, maxReturn, order);
 	}
 
+    /**
+     *
+     * @param store
+     * @param maxReturn
+     * @param searchOrdering
+     * @return
+     */
 	@Override
-	public List<Store> searchStore(Store store, int maxReturn, int startingIndex) {
-		//TODO: implementation needed
-		return null;
-	}
-
-	@Override
-	public List<Store> getStores() {
-		// TODO Auto-generated method stub
-		return storeDao.getStores();
-	}
-
-	@Override
-	public List<Store> getStores(int maxReturn) {
-        //TODO: implementation needed
-		return null;
+	public List<Store> searchStore(Store store, int maxReturn, SearchOrdering searchOrdering) {
+		List<Store> results = storeDao.findStores(store, maxReturn, searchOrdering);
+		return results;
 	}
 
 	@Override
@@ -61,26 +64,40 @@ public class StoreServiceImpl implements IStoreService {
 		storeDao.deleteStore(store_id);
 		
 	}
-	@Override
-	public Store getStoreByID(int id) {		
-		return storeDao.getStoreByID(id);
-	}
 
+    /**
+     * Check if a Store existed in storage or not
+     * @param store
+     * @return true if store did exist, or false if not
+     */
 	@Override
 	public boolean exists(Store store) {
-		//TODO: implementation needed
-		return false;
+	    //TODO: we may need to have qualifiers for how stores "existed"
+        int maxResults = 1;
+		List<Store> foundStores = searchStore(store, maxResults);
+		boolean isExisted = !foundStores.isEmpty();
+		return isExisted;
 	}
 
+    /**
+     * Save the store to persistent storage
+     * @param newStore
+     */
     @Override
     public void saveStore(Store newStore) {
         //TODO: implementation needed
     }
 
+
+    /**
+     * Find a store by its ID
+     * @param storeId
+     * @return Store with appropriate ID, or null if not found
+     */
 	@Override
 	public Store findById(int storeId) {
-		// TODO Auto-generated method stub
-		return null;
+		Store foundStore = storeDao.getStoreByID(storeId);
+		return foundStore;
 	}
 
 }
