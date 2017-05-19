@@ -47,7 +47,14 @@ public class StoreServiceImpl implements IStoreService {
 		return results;
 	}
 
-	@Override
+    @Override
+    public List<Store> getAllStores() {
+        Store store = new Store();
+        return searchStore(store);
+
+    }
+
+    @Override
 	public void createStore(Store store) {
 		storeDao.createStore(store);
 		

@@ -75,7 +75,7 @@ public class StoreController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseEntity<Map<String,Object>> getAll() {
 		LOG.info("getting all stores");
-		List<Store> stores = storeService.getStores();
+		List<Store> stores = storeService.getAllStores();
 		if (stores == null || stores.isEmpty()) {
 			LOG.info("no stores found");
 			//TODO: No content is weird :( let's return an empty list

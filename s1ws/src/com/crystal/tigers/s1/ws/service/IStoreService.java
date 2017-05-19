@@ -13,6 +13,8 @@ public interface IStoreService {
 
     public List<Store> searchStore(Store store, int maxReturn, SearchOrdering searchOrdering);
 
+    public List<Store> getAllStores();
+
     //TODO: should we handle the return value? If yes, a meaningful error message can be provided to user
 	public void createStore(Store store);
 
