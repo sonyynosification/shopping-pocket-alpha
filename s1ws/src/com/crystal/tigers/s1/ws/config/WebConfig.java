@@ -9,5 +9,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @ComponentScan("com.crystal.tigers.s1.ws")
 public class WebConfig extends WebMvcConfigurerAdapter {
-
+	
 }

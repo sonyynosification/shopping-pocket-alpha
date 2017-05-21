@@ -21,16 +21,16 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	Session session = null;
-	 Transaction tx = null;
+	Transaction tx = null;
 
 	@Override
 	public List<Store> searchStore(Store store) {
 
 		Criteria criteria = session.createCriteria(Store.class);
 		Criterion storeName = Restrictions.like("storeName", store.getStoreName());
-		Criterion storeLocation = Restrictions.like("storeLocation", store.getStoreAddress());
+		Criterion storeLocation = Restrictions.like("storeAddress", store.getStoreAddress());
 		Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
 		criteria.add(completedCondition);
 		return (List<Store>) criteria.list();
@@ -39,22 +39,21 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 	@Override
 	public List<Store> getStores() {
 		session = sessionFactory.openSession();
-		  tx = session.beginTransaction();
-		  List storeList = session.createCriteria(Store.class)
-		    .list();
-		  tx.commit();
-		  session.close();
-		  return storeList;
+		tx = session.beginTransaction();
+		List storeList = session.createCriteria(Store.class).list();
+		tx.commit();
+		session.close();
+		return storeList;
 	}
 
 	@Override
 	public void createStore(Store store) {
-		persist(store);		
+		persist(store);
 	}
 
 	@Override
 	public void updateStore(Store store) {
-			
+
 	}
 
 	@Override
@@ -63,7 +62,7 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 		em.getTransaction().begin();
 		em.remove(store);
 		em.getTransaction().commit();
-		
+
 	}
 
 	@Override

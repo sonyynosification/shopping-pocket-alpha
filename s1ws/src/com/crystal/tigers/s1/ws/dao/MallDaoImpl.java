@@ -14,59 +14,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crystal.tigers.s1.ws.model.Mall;
-import com.crystal.tigers.s1.ws.model.Store;
 
 @Repository("mallDao")
-public class MallDaoImpl extends AbstractDao<Integer, Mall> implements iMallDao{
+public class MallDaoImpl extends AbstractDao<Integer, Mall> implements iMallDao {
 	EntityManager em;
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	Session session = null;
-	 Transaction tx = null;
+	Transaction tx = null;
+
 	@Override
-	public List<Mall> searchStore(Mall mall) {
+	public List<Mall> searchMall(Mall mall) {
 		Criteria criteria = session.createCriteria(Mall.class);
-		Criterion mallName = Restrictions.like("mallname", mall.getMallName());
+		Criterion mallName = Restrictions.like("mallName", mall.getMallName());
 		Criterion mallLocation = Restrictions.like("mallLocation", mall.getMallLocation());
 		Criterion completedCondition = Restrictions.disjunction().add(mallName).add(mallLocation);
 		criteria.add(completedCondition);
 		return (List<Mall>) criteria.list();
 	}
+
 	@Override
-	public void createStore(Mall mall) {
+	public void createMall(Mall mall) {
 		persist(mall);
-		
+
 	}
+
 	@Override
-	public void updateStore(Mall mall) {
+	public void updateMall(Mall mall) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
-	public void deleteStore(int mall_id) {
+	public void deleteMall(int mall_id) {
 		Mall mall = em.find(Mall.class, mall_id);
 		em.getTransaction().begin();
 		em.remove(mall);
 		em.getTransaction().commit();
-		
-		
+
 	}
+
 	@Override
 	public List<Mall> getMalls() {
 		session = sessionFactory.openSession();
-		  tx = session.beginTransaction();
-		  List mallList = session.createCriteria(Mall.class)
-		    .list();
-		  tx.commit();
-		  session.close();
-		  return mallList;
+		tx = session.beginTransaction();
+		List mallList = session.createCriteria(Mall.class).list();
+		tx.commit();
+		session.close();
+		return mallList;
 	}
+
 	@Override
 	public Mall getMallByID(int id) {
 		// TODO Auto-generated method stub
 		return getByKey(id);
 	}
-	
+
 }
