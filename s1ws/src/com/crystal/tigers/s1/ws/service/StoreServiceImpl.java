@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.crystal.tigers.s1.ws.dao.IStoreDao;
+import com.crystal.tigers.s1.ws.dao.StoreDao;
 import com.crystal.tigers.s1.ws.model.Store;
 @Service("storeService")
 @Transactional
 public class StoreServiceImpl implements IStoreService {
 
 	@Autowired
-	private IStoreDao storeDao;
+	private StoreDao storeDao;
 
 	@Override
 	public List<Store> searchStore(Store store) {		

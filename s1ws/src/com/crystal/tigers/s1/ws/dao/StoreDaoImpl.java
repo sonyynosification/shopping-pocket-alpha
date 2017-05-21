@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.crystal.tigers.s1.ws.model.Store;
 
 @Repository("storeDao")
-public class StoreDaoImpl extends AbstractDao<Integer, Store> implements IStoreDao {
+public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDao {
 	EntityManager em;
 
 	@Autowired
@@ -76,11 +76,12 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements IStoreD
 	@Override
 	public List<Store> findStores(Store searchStore, int maxReturn, SearchOrdering ordering) {
         session = sessionFactory.openSession();
+        tx = null;
         tx = session.beginTransaction();
             Criteria criteria = session.createCriteria(Store.class);
             //TODO: More Criterion to be created
             Criterion storeName = Restrictions.like("storeName", searchStore.getStoreName());
-            Criterion storeLocation = Restrictions.like("storeLocation", searchStore.getStoreAddress());
+            Criterion storeLocation = Restrictions.like("storeAddress", searchStore.getStoreAddress());
             Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
 
             criteria.add(completedCondition);

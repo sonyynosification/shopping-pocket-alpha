@@ -6,7 +6,7 @@ import com.crystal.tigers.s1.ws.common.objects.SearchOrdering;
 import com.crystal.tigers.s1.ws.model.Store;
 ;
 
-public interface IStoreDao {
+public interface StoreDao {
 	public List<Store> searchStore(Store store);
 	public void createStore(Store store);	
 	public void updateStore(Store store);
