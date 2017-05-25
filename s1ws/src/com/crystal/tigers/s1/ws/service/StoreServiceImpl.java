@@ -93,6 +93,7 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public void saveStore(Store newStore) {
         //TODO: implementation needed
+		storeDao.createStore(newStore);
     }
 
 

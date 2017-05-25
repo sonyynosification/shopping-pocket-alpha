@@ -1,6 +1,9 @@
 package com.crystal.tigers.s1.ws.dao;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -10,6 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -69,7 +74,6 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 
 	@Override
 	public Store getStoreByID(int id) {
-		// TODO Auto-generated method stub
 		return getByKey(id);
 	}
 
@@ -78,22 +82,60 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
         session = sessionFactory.openSession();
         tx = null;
         tx = session.beginTransaction();
-            Criteria criteria = session.createCriteria(Store.class);
-            //TODO: More Criterion to be created
-            Criterion storeName = Restrictions.like("storeName", searchStore.getStoreName());
-            Criterion storeLocation = Restrictions.like("storeAddress", searchStore.getStoreAddress());
-            Criterion completedCondition = Restrictions.disjunction().add(storeName).add(storeLocation);
+        Criteria criteria = session.createCriteria(Store.class);
+        //TODO: More Criterion to be created
+        List<Criterion> criterionList = getStoreCriterions(searchStore);
+        Disjunction disjunction = Restrictions.disjunction();
+        Junction junction = null;
+        Criterion completedCondition;
+        for (Criterion c: criterionList
+             ) {
+            junction = disjunction.add(c);
+        }
+        completedCondition = junction;
 
+        if (completedCondition != null) {
             criteria.add(completedCondition);
+        }
+        criteria.setMaxResults(maxReturn);
 
-            criteria.setMaxResults(maxReturn);
+        setCriteriaOrders(criteria, ordering);
 
-            setCriteriaOrders(criteria, ordering);
-
-            List<Store> results = criteria.list();
+        List<Store> results = criteria.list();
         tx.commit();
         session.close();
         return results;
 	}
+
+	protected List<Criterion> getStoreCriterions(Store store) {
+        List<AbstractMap.SimpleEntry<String, Object>> objectMap = getStoreObjectMapping(store);
+	    List<Criterion> retList = new ArrayList<>();
+
+	    for (AbstractMap.SimpleEntry<String,Object> obj : objectMap) {
+	        //TODO: nullable check here should be for other types than String
+	        if (obj.getValue() != null) {
+	            Criterion criterion = Restrictions.like(obj.getKey(), obj.getValue());
+	            retList.add(criterion);
+            }
+        }
+        return retList;
+    }
+
+    protected List<AbstractMap.SimpleEntry<String,Object>> getStoreObjectMapping(Store store) {
+        List<AbstractMap.SimpleEntry<String,Object>> retList = new ArrayList<>();
+        AbstractMap.SimpleEntry<String, Object> storeNameMapping =
+                new AbstractMap.SimpleEntry<String, Object>("storeName", store.getStoreName());
+        AbstractMap.SimpleEntry<String, Object> storeEmailMapping =
+                new AbstractMap.SimpleEntry<String, Object>("storeEmail", store.getStoreEmail());
+        AbstractMap.SimpleEntry<String, Object> storeAddressMapping =
+                new AbstractMap.SimpleEntry<String, Object>("storeAddress", store.getStoreAddress());
+
+        retList.add(storeNameMapping);
+        retList.add(storeEmailMapping);
+        retList.add(storeAddressMapping);
+        return retList;
+    }
+
+    //protected final List<AbstractMap.SimpleEntry<String,Object>> STORE_OBJECT_MAPPING =
 
 }
