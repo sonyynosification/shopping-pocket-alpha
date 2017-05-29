@@ -2,6 +2,7 @@ package com.crystal.tigers.s1.ws.service;
 
 import java.util.List;
 
+import com.crystal.tigers.s1.ws.model.RecentSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,5 +72,22 @@ public class UserServiceImpl implements IUserService {
 		return users;
 	}
 
-   
+	@Override
+	public List<String> getUserRecentSearches() {
+		//TODO: implementation needed
+		return null;
+	}
+
+	@Override
+	public boolean exists(RecentSearch recentSearch) {
+		//TODO: implementation needed
+		return false;
+	}
+
+	@Override
+	public void saveRecentSearch(RecentSearch recentSearch) {
+		//TODO: implementation needed
+	}
+
+
 }

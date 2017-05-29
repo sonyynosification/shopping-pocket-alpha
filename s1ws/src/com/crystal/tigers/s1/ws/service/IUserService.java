@@ -2,6 +2,7 @@ package com.crystal.tigers.s1.ws.service;
 
 import java.util.List;
 
+import com.crystal.tigers.s1.ws.model.RecentSearch;
 import com.crystal.tigers.s1.ws.model.User;
 
 public interface IUserService {
@@ -23,4 +24,10 @@ public interface IUserService {
 	boolean exists(User user);
 
 	List<User> searchByModel(User user);
+
+    List<String> getUserRecentSearches();
+
+	boolean exists(RecentSearch recentSearch);
+
+	void saveRecentSearch(RecentSearch recentSearch);
 }
