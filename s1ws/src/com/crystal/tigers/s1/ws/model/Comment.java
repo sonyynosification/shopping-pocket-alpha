@@ -11,8 +11,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "comment")
-@AssociationOverrides({ @AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "user_id")),
-		@AssociationOverride(name = "pk.store", joinColumns = @JoinColumn(name = "store_id")) })
+@AssociationOverrides({
+		@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "user_id")),
+		@AssociationOverride(name = "pk.store", joinColumns = @JoinColumn(name = "store_id"))
+})
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private UserStoreId pk = new UserStoreId();

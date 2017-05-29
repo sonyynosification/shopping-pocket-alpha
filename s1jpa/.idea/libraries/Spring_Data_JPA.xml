@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Spring Data JPA" type="spring-data-jpa">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javax.persistence.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
