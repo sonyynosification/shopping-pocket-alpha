@@ -35,10 +35,24 @@ public class RecentSearchController {
      * @return
      */
     @RequestMapping(value="/list", method = RequestMethod.POST)
-    public ResponseEntity<List<String>> getAll() {
-        List<String> recentSearches = userService.getUserRecentSearches();
+    public ResponseEntity<Map<String, Object>> getAll(@RequestBody JSONRequestMapperObject<User> usrObj) {
+        Map<String, Object> results = new HashMap<String, Object>();
+        ResponseEntity<Map<String, Object>> responseEntity;
+        HttpStatus statusCode;
 
-        return new ResponseEntity<List<String>>(recentSearches, HttpStatus.OK);
+        //TODO: messages should be well formatted to provide level: info / errors / warning
+        List<String> messages = new ArrayList<String>();
+
+        User user = usrObj.getObject();
+        List<RecentSearch> recentSearches = userService.getUserRecentSearches(user);
+
+        results.put("objects", recentSearches);
+        results.put("messages", messages);
+        statusCode = HttpStatus.OK;
+
+        responseEntity = new ResponseEntity<Map<String, Object>>(results, statusCode);
+
+        return responseEntity;
     }
 
     @RequestMapping(value="/list/{max}", method = RequestMethod.POST)
