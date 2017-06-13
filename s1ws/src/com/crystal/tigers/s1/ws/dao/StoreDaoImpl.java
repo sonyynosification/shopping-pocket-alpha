@@ -100,7 +100,6 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
         criteria.setMaxResults(maxReturn);
 
         setCriteriaOrders(criteria, ordering);
-
         List<Store> results = criteria.list();
         tx.commit();
         session.close();

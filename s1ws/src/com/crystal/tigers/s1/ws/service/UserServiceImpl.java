@@ -7,7 +7,6 @@ import com.crystal.tigers.s1.ws.common.objects.SearchOrdering;
 import com.crystal.tigers.s1.ws.common.utils.constants.SearchQualifiers;
 import com.crystal.tigers.s1.ws.dao.RecentSearchDAO;
 import com.crystal.tigers.s1.ws.model.RecentSearch;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -136,15 +135,14 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void deleteRecentSearches(User user) {
-		//TODO: implementation needed
-		throw new NotImplementedException();
+	public int deleteRecentSearches(User user) {
+		int deletedCount = recentSearchDao.deleteAllRecentSearches(user);
+		return deletedCount;
 	}
 
 	@Override
-	public void deleteRecentSearches(User user, RecentSearch recentSearch) {
-		//TODO: implementation needed
-		throw new NotImplementedException();
+	public void deleteRecentSearches(RecentSearch recentSearch) {
+		recentSearchDao.deleteRecentSearch(recentSearch);
 	}
 
 

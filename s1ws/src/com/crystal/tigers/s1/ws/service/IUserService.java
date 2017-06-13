@@ -50,12 +50,7 @@ public interface IUserService {
 	 * Delete all RecentSearch of user
 	 * @param user
 	 */
-	void deleteRecentSearches(User user);
+	int deleteRecentSearches(User user);
 
-	/**
-	 * Delete some specific RecentSearch
-	 * @param recentSearch
-	 */
-	void deleteRecentSearches(User user, RecentSearch recentSearch);
-
+	void deleteRecentSearches(RecentSearch recentSearch);
 }

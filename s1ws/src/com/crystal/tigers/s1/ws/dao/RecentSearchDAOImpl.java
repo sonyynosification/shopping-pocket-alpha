@@ -3,6 +3,8 @@ package com.crystal.tigers.s1.ws.dao;
 import com.crystal.tigers.s1.ws.common.objects.SearchOrdering;
 import com.crystal.tigers.s1.ws.model.RecentSearch;
 import com.crystal.tigers.s1.ws.model.Store;
+import com.crystal.tigers.s1.ws.model.User;
+import com.sun.org.apache.regexp.internal.RE;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +37,19 @@ public class RecentSearchDAOImpl extends AbstractDao<Integer,RecentSearch> imple
     Transaction tx = null;
 
     @Override
-    public void createRecentSearch(RecentSearch recentSearch) {
-        //TODO: implementation needed
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void deleteAllRecentSearches() {
-        //TODO: implementation needed
-        throw new NotImplementedException();
-    }
-
-    @Override
     public void deleteRecentSearch(RecentSearch recentSearch) {
-        //TODO: implementation needed
-        throw new NotImplementedException();
+        em.getTransaction().begin();
+        em.remove(recentSearch);
+        em.getTransaction().commit();
+    }
+
+    public int deleteAllRecentSearches(User user) {
+        StringBuilder queryString = new StringBuilder();
+        queryString.append("DELETE from user_recent_search where user_id = :p");
+
+        Query query = em.createQuery(queryString.toString());
+        int deletedCount = query.setParameter("p",user.getUserId()).executeUpdate();
+        return deletedCount;
     }
 
     @Override
@@ -104,11 +105,7 @@ public class RecentSearchDAOImpl extends AbstractDao<Integer,RecentSearch> imple
         return retList;
     }
 
-    @Override
-    public RecentSearch getRecentSearchByID(int id) {
-        //TODO: implementation needed
-        throw new NotImplementedException();
-    }
+
 
     @Override
     public void saveRecentSearch(RecentSearch recentSearch) {

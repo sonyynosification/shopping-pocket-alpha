@@ -102,7 +102,23 @@ public class RecentSearchController {
 
     @RequestMapping(value="/deleteAll", method=RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> deleteAll(JSONRequestMapperObject<User> deleteObj) {
-        //TODO: implementation needed
-        throw new NotImplementedException();
+        //TODO: create new response entity and results || statusCode using Factory pattern
+        Map<String, Object> results = new HashMap<String, Object>();
+        ResponseEntity<Map<String, Object>> responseEntity;
+        HttpStatus statusCode;
+
+        //TODO: messages should be well formatted to provide level: info / errors / warning
+        List<String> messages = new ArrayList<String>();
+
+        User user = deleteObj.getObject();
+        int deletedCount = userService.deleteRecentSearches(user);
+
+        statusCode = HttpStatus.OK;
+        messages.add("Deleted successfully " + deletedCount + " records");
+        results.put("messages",messages);
+
+
+        responseEntity = new ResponseEntity<Map<String, Object>>(results,statusCode);
+        return responseEntity;
     }
 }
