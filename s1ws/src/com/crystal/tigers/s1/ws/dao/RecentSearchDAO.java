@@ -18,4 +18,6 @@ public interface RecentSearchDAO {
     public List<RecentSearch> findRecentSearches(RecentSearch recentSearch, int maxReturn, SearchOrdering searchOrdering);
 
     public RecentSearch getRecentSearchByID(int id);
+
+    void saveRecentSearch(RecentSearch recentSearch);
 }

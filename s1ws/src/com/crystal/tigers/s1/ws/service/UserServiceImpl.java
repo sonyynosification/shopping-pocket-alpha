@@ -1,10 +1,13 @@
 package com.crystal.tigers.s1.ws.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.crystal.tigers.s1.ws.common.objects.SearchOrdering;
+import com.crystal.tigers.s1.ws.common.utils.constants.SearchQualifiers;
 import com.crystal.tigers.s1.ws.dao.RecentSearchDAO;
 import com.crystal.tigers.s1.ws.model.RecentSearch;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,32 +98,41 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public void createRecentSearch(RecentSearch recentSearch) {
+		if (null==(recentSearch.getDateCreated())) {
+			recentSearch.setDateCreated(new Date());
+		}
+		saveRecentSearch(recentSearch);
+	}
+
+	@Override
 	public void saveRecentSearch(RecentSearch recentSearch) {
-		//TODO: implementation needed
+		recentSearchDao.saveRecentSearch(recentSearch);
 	}
 
 	@Override
 	public List<RecentSearch> findRecentSearches(User user) {
-		//TODO: implementation needed
-		throw new NotImplementedException();
+		RecentSearch recentSearch = new RecentSearch();
+		recentSearch.setUser(user);
+		return findRecentSearches(recentSearch);
 	}
 
 	@Override
 	public List<RecentSearch> findRecentSearches(RecentSearch recentSearch) {
-		//TODO: implementation needed
-		throw new NotImplementedException();
+		int maxResults = SearchQualifiers.SEARCH_RANGE_UNLIMITED;
+		return findRecentSearches(recentSearch, maxResults);
 	}
 
 	@Override
 	public List<RecentSearch> findRecentSearches(RecentSearch recentSearch, int maxResults) {
-		//TODO: implementation needed
-		throw new NotImplementedException();
+		SearchOrdering searchOrdering = SearchOrdering.newInstance();
+		return findRecentSearches(recentSearch, maxResults, searchOrdering);
 	}
 
 	@Override
 	public List<RecentSearch> findRecentSearches(RecentSearch recentSearch, int maxResults, SearchOrdering searchOrdering) {
-		//TODO: implementation needed
-		throw new NotImplementedException();
+		List<RecentSearch> retVal = recentSearchDao.findRecentSearches(recentSearch, maxResults, searchOrdering);
+		return retVal;
 	}
 
 	@Override

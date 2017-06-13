@@ -2,7 +2,6 @@ package com.crystal.tigers.s1.ws.controller;
 
 import com.crystal.tigers.s1.ws.common.objects.mapper.JSONRequestMapperObject;
 import com.crystal.tigers.s1.ws.model.RecentSearch;
-import com.crystal.tigers.s1.ws.model.Store;
 import com.crystal.tigers.s1.ws.model.User;
 import com.crystal.tigers.s1.ws.service.IUserService;
 import org.slf4j.Logger;
@@ -44,7 +43,7 @@ public class RecentSearchController {
         List<String> messages = new ArrayList<String>();
 
         User user = usrObj.getObject();
-        List<RecentSearch> recentSearches = userService.getUserRecentSearches(user);
+        List<RecentSearch> recentSearches = userService.findRecentSearches(user);
 
         results.put("objects", recentSearches);
         results.put("messages", messages);
@@ -81,7 +80,7 @@ public class RecentSearchController {
             results.put("messages",messages);
             statusCode = HttpStatus.CONFLICT;
         } else {
-            userService.saveRecentSearch(newRecentSearch);
+            userService.createRecentSearch(newRecentSearch);
             messages.add("Recent Search created successfully");
             results.put("messages",messages);
             statusCode = HttpStatus.CREATED;

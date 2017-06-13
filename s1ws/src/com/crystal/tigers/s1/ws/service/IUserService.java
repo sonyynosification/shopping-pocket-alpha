@@ -32,6 +32,8 @@ public interface IUserService {
 
 	boolean exists(RecentSearch recentSearch);
 
+	void createRecentSearch(RecentSearch recentSearch);
+
 	void saveRecentSearch(RecentSearch recentSearch);
 
 	List<RecentSearch> findRecentSearches(User user);
