@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid class="justify-center">
+    <div class="row">
+      <button ion-button icon-end (click)="onFacebookLogin()">
+        <span>Đăng nhập với Facebook:</span>
+        <ion-icon name="logo-facebook"></ion-icon>
+      </button>
+    </div>
+    <div class="row">
+      <button ion-button icon-end (click)="onSkip()">
+        <span>Bỏ qua và tiếp tục</span>
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </div>
+  </ion-grid>
+</ion-content>
