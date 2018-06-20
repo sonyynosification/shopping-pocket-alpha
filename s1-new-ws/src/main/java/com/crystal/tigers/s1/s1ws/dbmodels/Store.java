@@ -3,18 +3,7 @@ package com.crystal.tigers.s1.s1ws.dbmodels;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -83,14 +72,17 @@ public class Store implements Serializable {
 	private List<Category> categories;
 	
 
-	// bi-directional many-to-many association to com.crystal.tigers.s1.s1ws.dbmodels.Mall
-	@ManyToMany(fetch = FetchType.EAGER)
+	// One mall has many stores, but a store should stay only in one mall
+/*	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "mall_has_store", joinColumns = { @JoinColumn(name = "store_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "mall_id") })
 	@Fetch(FetchMode.SELECT)
 	@BatchSize(size = 10)
 	//@JsonIgnore
-	private List<Mall> malls;
+	private List<Mall> malls;*/
+
+	@ManyToOne
+	private Mall mall;
 
 	// bi-directional many-to-many association to com.crystal.tigers.s1.s1ws.dbmodels.Brand
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -190,12 +182,12 @@ public class Store implements Serializable {
 		return comment;
 	}
 
-	public List<Mall> getMalls() {
-		return this.malls;
+	public Mall getMall() {
+		return this.mall;
 	}
 
-	public void setMalls(List<Mall> malls) {
-		this.malls = malls;
+	public void setMall(Mall mall) {
+		this.mall = mall;
 	}
 
 	public List<Brand> getBrands() {

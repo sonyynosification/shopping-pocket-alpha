@@ -25,8 +25,8 @@ public class Mall implements Serializable {
 	@Column(name="mall_name")
 	private String mallName;
 
-	//bi-directional many-to-many association to com.crystal.tigers.s1.s1ws.dbmodels.Store
-	@ManyToMany(fetch = FetchType.EAGER,mappedBy="malls")
+	//TODO: I believe this should only be one to many
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="mall")
 	private List<Store> stores;
 
 	public Mall() {

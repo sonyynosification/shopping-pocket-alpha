@@ -3,7 +3,11 @@ package com.crystal.tigers.s1.s1ws.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.crystal.tigers.s1.s1ws.dbmodels.User;
 import org.hibernate.Criteria;
@@ -19,9 +23,9 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	@PersistenceContext
 	EntityManager em;
-	
+
 	@Autowired
-	 SessionFactory sessionFactory;
+	private EntityManagerFactory entityManagerFactory;
 
 	 Session session = null;
 	 Transaction tx = null;
@@ -48,13 +52,20 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@Override
 	public List<User> findAllUsers() {
-		session = sessionFactory.openSession();
+		/*session = sessionFactory.openSession();
 		  tx = session.beginTransaction();
 		  List userList = session.createCriteria(User.class)
 		    .list();
 		  tx.commit();
 		  session.close();
-		  return userList;
+		  return userList;*/
+		session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		tx = session.beginTransaction();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery criteria = builder.createQuery(User.class);
+		Root contactRoot = criteria.from(User.class);
+		criteria.select(contactRoot);
+		return session.createQuery(criteria).getResultList();
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.crystal.tigers.s1.s1ws.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 import com.crystal.tigers.s1.s1ws.dbmodels.Store;
@@ -21,7 +22,7 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 	EntityManager em;
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private EntityManagerFactory entityManagerFactory;
 
 	Session session = null;
 	Transaction tx = null;
@@ -39,7 +40,7 @@ public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDa
 
 	@Override
 	public List<Store> getStores() {
-		session = sessionFactory.openSession();
+		session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
 		tx = session.beginTransaction();
 		List storeList = session.createCriteria(Store.class).list();
 		tx.commit();

@@ -101,12 +101,12 @@ public class StoreController {
 		Store newStore = newObj.getObject();
 
 		if (storeService.exists(newStore)) {
-		    messages.add("com.crystal.tigers.s1.s1ws.dbmodels.Store already exists");
+		    messages.add("Store already exists");
 		    results.put("messages",messages);
 		    statusCode = HttpStatus.CONFLICT;
         } else {
 		    storeService.saveStore(newStore);
-		    messages.add("com.crystal.tigers.s1.s1ws.dbmodels.Store created successfully");
+		    messages.add("Store created successfully");
 		    results.put("messages",messages);
 		    statusCode = HttpStatus.CREATED;
         }

@@ -3,6 +3,7 @@ package com.crystal.tigers.s1.s1ws.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 import com.crystal.tigers.s1.s1ws.dbmodels.Mall;
@@ -21,7 +22,7 @@ public class MallDaoImpl extends AbstractDao<Integer, Mall> implements IMallDao 
 	EntityManager em;
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private EntityManagerFactory entityManagerFactory;
 
 	Session session = null;
 	Transaction tx = null;
@@ -39,7 +40,6 @@ public class MallDaoImpl extends AbstractDao<Integer, Mall> implements IMallDao 
 	@Override
 	public void createMall(Mall mall) {
 		persist(mall);
-
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class MallDaoImpl extends AbstractDao<Integer, Mall> implements IMallDao 
 
 	@Override
 	public List<Mall> getMalls() {
-		session = sessionFactory.openSession();
+		session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
 		tx = session.beginTransaction();
 		List mallList = session.createCriteria(Mall.class).list();
 		tx.commit();

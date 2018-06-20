@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("mallService")
 @Transactional
-
 public class MallServiceImpl implements IMallService {
 
 	@Autowired

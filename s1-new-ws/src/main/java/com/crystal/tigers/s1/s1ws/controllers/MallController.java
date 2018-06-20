@@ -104,12 +104,12 @@ public class MallController {
 		Mall newMall = newObj.getObject();
 
 		if (mallService.exists(newMall)) {
-			messages.add("com.crystal.tigers.s1.s1ws.dbmodels.Mall already exists");
+			messages.add("Mall already exists");
 			results.put("messages", messages);
 			statusCode = HttpStatus.CONFLICT;
 		} else {
 			mallService.saveMall(newMall);
-			messages.add("com.crystal.tigers.s1.s1ws.dbmodels.Mall created successfully");
+			messages.add("Mall created successfully");
 			results.put("messages", messages);
 			statusCode = HttpStatus.CREATED;
 		}

@@ -101,7 +101,7 @@ class UserController(@Autowired private val userService: IUserService) {
         val currentUser = userService.findById(user_id)
 
         if (currentUser == null) {
-            logger.info("com.crystal.tigers.s1.s1ws.dbmodels.User with id {} not found", user_id)
+            logger.info("User with id {} not found", user_id)
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
 
@@ -124,7 +124,7 @@ class UserController(@Autowired private val userService: IUserService) {
         val user = userService.findById(id)
 
         if (user == null) {
-            logger.info("Unable to delete. com.crystal.tigers.s1.s1ws.dbmodels.User with id {} not found", id)
+            logger.info("Unable to delete, user with id {} not found", id)
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
 
