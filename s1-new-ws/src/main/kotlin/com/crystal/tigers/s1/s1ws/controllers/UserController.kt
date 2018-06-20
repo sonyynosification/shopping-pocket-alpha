@@ -17,6 +17,7 @@ import java.io.IOException
 import java.util.HashMap
 
 @RestController
+@RequestMapping(value = "/users")
 class UserController(@Autowired private val userService: IUserService) {
 
     private val logger: Logger = LoggerFactory.getLogger(UserController::class.java)

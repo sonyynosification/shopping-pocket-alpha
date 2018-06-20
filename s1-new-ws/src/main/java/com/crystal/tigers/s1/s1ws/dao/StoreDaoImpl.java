@@ -3,6 +3,7 @@ package com.crystal.tigers.s1.s1ws.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import com.crystal.tigers.s1.s1ws.dbmodels.Store;
 import org.hibernate.Criteria;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository("storeDao")
 public class StoreDaoImpl extends AbstractDao<Integer, Store> implements StoreDao {
+	@PersistenceContext
 	EntityManager em;
 
 	@Autowired
